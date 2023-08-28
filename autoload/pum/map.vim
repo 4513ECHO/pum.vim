@@ -174,12 +174,12 @@ function pum#map#confirm() abort
 
   return ''
 endfunction
-function pum#map#confirm_word() abort
+function pum#map#confirm_word(pattern='\S\+') abort
   let pum = pum#_get()
 
   if pum.cursor > 0
-    " Get non space characters
-    const word = pum.items[pum.cursor - 1].word->matchstr('^\S\+')
+    " Get non space characters by default
+    const word = pum.items[pum.cursor - 1].word->matchstr('^' .. a:pattern)
     call s:insert(word, pum.orig_input, { -> s:skip_next_complete() })
   else
     call s:skip_next_complete()
